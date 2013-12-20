@@ -105,16 +105,10 @@ function fieldbasedacls_civicrm_tabs(&$tabs, $contactID) {
  *
  */
 function fieldbasedacls_civicrm_aclWhereClause($type, &$tables, &$whereTables, &$contactID, &$where, $acl = 0) {
-  if (! $contactID) {
+  if (!$contactID || !fieldbasedacls_acls_enabled()) {
    return;
   }
-  //this makes this module compatible with multisite
-  if (
-    user_access('view all contacts in domain'
-    || user_access('edit all contacts in domain')
-    || !civicrm_api('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_is_enabled', 'group' => 'fieldbasedacls')))) {
-    return;
-  }
+
   $permissionGrantCustomGroup = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_grant_table', 'group' => 'fieldbasedacls'));
   // get table identity of data on custom data tab from which permissions are taken
   $permissionTable = fieldbasedacls_get_grant_table();
@@ -245,4 +239,23 @@ function fieldbasedacls_convert_perms_to_array($permissionString){
       $permValues = array($permissionString);
     }
   return $permValues;
+}
+
+/**
+ * Check if field based acls are enabled for this domain & whether these ACLS should be bypassed
+ * aclWhere won't be called if the person has 'view all contacts' but we should also respect 'view all contacts in domain'
+ * @return void|boolean
+ */
+function fieldbasedacls_acls_enabled() {
+  try {
+    if(user_access('view all contacts in domain')
+      || user_access('edit all contacts in domain')
+      || !civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_is_enabled', 'group' => 'fieldbasedacls'))) {
+        return FALSE;
+    }
+  }
+  catch(Exception $e) {
+    return FALSE;
+  }
+  return TRUE;
 }
