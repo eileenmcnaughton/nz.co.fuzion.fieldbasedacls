@@ -109,12 +109,11 @@ function fieldbasedacls_civicrm_aclWhereClause($type, &$tables, &$whereTables, &
    return;
   }
 
-  $permissionGrantCustomGroup = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_grant_table', 'group' => 'fieldbasedacls'));
+  $permissionGrantCustomGroup = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_grant_table', 'group' => 'Field Based ACLS'));
   // get table identity of data on custom data tab from which permissions are taken
   $permissionTable = fieldbasedacls_get_grant_table();
   $regionTable = fieldbasedacls_get_to_table();
-  $perms = fieldbasedacls_construct_permissions_array ($permissionGrantCustomGroup);
-
+  $perms = fieldbasedacls_construct_permissions_array($permissionGrantCustomGroup);
   // get all the values from the permission table for this contact
   foreach ( $perms as $p ) {
     $keys [] = $p ['perm_field'];
@@ -168,8 +167,7 @@ function fieldbasedacls_civicrm_aclWhereClause($type, &$tables, &$whereTables, &
   if (empty ( $clauses )) {
     return;
   }
-  $tables [$regionTable] = $whereTables [$regionTable] = "LEFT JOIN {$regionTable} ON contact_a.id = {$regionTable}.entity_id";
-
+  $tables [ $regionTable] = $whereTables [$regionTable] = "LEFT JOIN {$regionTable} ON contact_a.id = {$regionTable}.entity_id";
   if (strlen ( trim ( $where ) ) != 0) {
     $where .= ' AND ';
   }
@@ -185,7 +183,7 @@ function fieldbasedacls_civicrm_aclWhereClause($type, &$tables, &$whereTables, &
 function fieldbasedacls_get_permissions_field($customgroup, $type) {
   // get CiviCRM Custom Data Groups
   $query = "SELECT id, label, column_name FROM civicrm_custom_field WHERE custom_group_id = '$customgroup' AND label LIKE '%$type%'";
-  $dao = CRM_Core_DAO::executeQuery($query, CRM_Core_DAO::$_nullArray);
+  $dao = CRM_Core_DAO::executeQuery($query);
   // do an or of all the where clauses u see
   $custom_fields = array();
   while ($dao->fetch()) {
@@ -198,19 +196,19 @@ function fieldbasedacls_get_permissions_field($customgroup, $type) {
 }
 
 function fieldbasedacls_get_grant_table() {
-  $customTableID = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_grant_table', 'group' => 'fieldbasedacls'));
+  $customTableID = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_grant_table', 'group' => 'Field Based ACLS'));
   return civicrm_api3('custom_group', 'getvalue', array('return' => 'table_name', 'id' => $customTableID));
 }
 
 function fieldbasedacls_get_to_table() {
-  $customTableID = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_to_table', 'group' => 'fieldbasedacls'));
+  $customTableID = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_to_table', 'group' => 'Field Based ACLS'));
   return civicrm_api3('custom_group', 'getvalue', array('return' => 'table_name', 'id' => $customTableID));
 }
 /*
 * Construct array of fields to be used for permissioning based on permissions array
   */
 function fieldbasedacls_construct_permissions_array($permissionGrantGroup) {
-  $mappings = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_field_label_map', 'group' => 'fieldbasedacls'));
+  $mappings = civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_field_label_map', 'group' => 'Field Based ACLS'));
   $perms = array();
   foreach ($mappings as $grant => $to) {
     $grantField = fieldbasedacls_get_permissions_field($permissionGrantGroup, $grant);
@@ -250,7 +248,7 @@ function fieldbasedacls_acls_enabled() {
   try {
     if(user_access('view all contacts in domain')
       || user_access('edit all contacts in domain')
-      || !civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_is_enabled', 'group' => 'fieldbasedacls'))) {
+      || !civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_is_enabled', 'group' => 'Field Based ACLS'))) {
         return FALSE;
     }
   }
