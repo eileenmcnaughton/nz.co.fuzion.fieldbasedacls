@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <extension key="nz.co.fuzion.fieldbasedacls" type="module">
   <file>fieldbasedacls</file>
-  <name>FIXME</name>
-  <description>FIXME</description>
-  <license>FIXME</license>
+  <name>Implements ACLs based on values in certain custom fields and also adds the ability to hide certain tabs</name>
+  <description>Implenents hook_civicrm_aclWhere for certain custom fields</description>
+  <license>AGPL</license>
   <maintainer>
-    <author>FIXME</author>
-    <email>FIXME@example.com</email>
+    <author>Eileen McNaughton</author>
+    <email>eileen@mcnaughty.com</email>
   </maintainer>
-  <releaseDate>2013-10-16</releaseDate>
-  <version>1.0</version>
+  <releaseDate>2021-01-2</releaseDate>
+  <version>1.1</version>
   <develStage>alpha</develStage>
   <compatibility>
-    <ver>4.2</ver>
+    <ver>5.27</ver>
   </compatibility>
   <comments>This is a new, undeveloped module</comments>
   <civix>
