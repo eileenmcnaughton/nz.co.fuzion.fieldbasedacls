@@ -80,10 +80,10 @@ function fieldbasedacls_civicrm_permissions(&$permissions){
  );
 }
 
-
+/*
 function fieldbasedacls_civicrm_tabs(&$tabs, $contactID) {
-
- if (user_access('administer geo-based permissions')) {
+ $user = \Drupal::currentUser();
+ if ($user->hasPermission('administer geo-based permissions')) {
   return;
  }
 
@@ -96,6 +96,7 @@ function fieldbasedacls_civicrm_tabs(&$tabs, $contactID) {
   }
  }
 }
+*/
 
 /**
  * Implement CiviCRM's hook_civicrm_aclWhereClause
@@ -245,9 +246,10 @@ function fieldbasedacls_convert_perms_to_array($permissionString){
  * @return void|boolean
  */
 function fieldbasedacls_acls_enabled() {
+  $user = \Drupal::currentUser();
   try {
-    if(user_access('view all contacts in domain')
-      || user_access('edit all contacts in domain')
+    if($user->hasPermission('view all contacts in domain')
+      || $user->hasPermission('edit all contacts in domain')
       || !civicrm_api3('setting', 'getvalue', array('name' => 'fieldbasedacls_acl_is_enabled', 'group' => 'Field Based ACLS'))) {
         return FALSE;
     }
