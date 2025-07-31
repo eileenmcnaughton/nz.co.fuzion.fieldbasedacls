@@ -29,7 +29,7 @@ function fieldbasedacls_civicrm_enable() {
  */
 function fieldbasedacls_civicrm_permissions(&$permissions) {
   $permissions = $permissions + [
-    'civicrm administer field-based permissions' => E::ts('CiviCRM Field Based Permissions: Administer field based permissions'),
+    'civicrm administer field-based permissions' => ['label' => E::ts('CiviCRM Field Based Permissions: Administer field based permissions')],
   ];
 }
 
