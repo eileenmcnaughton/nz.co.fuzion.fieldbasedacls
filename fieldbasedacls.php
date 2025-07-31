@@ -38,14 +38,14 @@ function fieldbasedacls_civicrm_permissions(&$permissions) {
  */
 function fieldbasedacls_civicrm_tabset($tabsetName, &$tabs, $context) {
 
-  if (user_access('administer geo-based permissions')) {
+  if (CRM_Core_Permission::check('administer geo-based permissions')) {
     return;
   }
 
-  $permissions_tab = variable_get('fieldbasedacls_civicrm_tabs', 0);
+  $permissions_tab = Civi::settings()->get('fieldbasedacls_civicrm_tabs') ?? 0;
   if ($tabsetName == 'civicrm/contact/view') {
     foreach ($tabs as $id => $tab) {
-      if ($tab['id'] == 'custom_' . variable_get('fieldbasedacls_civicrm_tabs', '')) {
+      if ($tab['id'] == 'custom_' . (Civi::settings()->get('fieldbasedacls_civicrm_tabs') ??  '')) {
         unset($tabs[$id]);
       }
     }
