@@ -38,7 +38,7 @@ function fieldbasedacls_civicrm_permissions(&$permissions) {
  */
 function fieldbasedacls_civicrm_tabset($tabsetName, &$tabs, $context) {
 
-  if (CRM_Core_Permission::check('administer geo-based permissions')) {
+  if (CRM_Core_Permission::check('civicrm administer field-based permissions')) {
     return;
   }
 
