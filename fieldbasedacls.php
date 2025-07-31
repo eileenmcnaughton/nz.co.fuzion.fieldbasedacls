@@ -63,11 +63,11 @@ function fieldbasedacls_civicrm_managed(&$entities) {
 }
 
 /**
- * Implements hook_civicrm_permissions().
+ * Implements hook_civicrm_permission().
  */
-function fieldbasedacls_civicrm_permissions(&$permissions) {
+function fieldbasedacls_civicrm_permission(&$permissions) {
   $permissions = $permissions + [
-    'civicrm administer field-based permissions' => E::ts('CiviCRM Field Based Permissions: Administer field based permissions'),
+    'civicrm administer field-based permissions' => ['label' => E::ts('CiviCRM Field Based Permissions: Administer field based permissions')],
   ];
 }
 
