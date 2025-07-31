@@ -11,13 +11,6 @@ function fieldbasedacls_civicrm_config(&$config) {
 }
 
 /**
- * Implements hook_civicrm_xmlMenu().
- */
-function fieldbasedacls_civicrm_xmlMenu(&$files) {
-  _fieldbasedacls_civix_civicrm_xmlMenu($files);
-}
-
-/**
  * Implements hook_civicrm_install().
  */
 function fieldbasedacls_civicrm_install() {
@@ -25,41 +18,10 @@ function fieldbasedacls_civicrm_install() {
 }
 
 /**
- * Implements hook_civicrm_uninstall().
- */
-function fieldbasedacls_civicrm_uninstall() {
-  return _fieldbasedacls_civix_civicrm_uninstall();
-}
-
-/**
  * Implements hook_civicrm_enable().
  */
 function fieldbasedacls_civicrm_enable() {
   return _fieldbasedacls_civix_civicrm_enable();
-}
-
-/**
- * Implements hook_civicrm_disable().
- */
-function fieldbasedacls_civicrm_disable() {
-  return _fieldbasedacls_civix_civicrm_disable();
-}
-
-/**
- * Implements hook_civicrm_upgrade().
- */
-function fieldbasedacls_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  return _fieldbasedacls_civix_civicrm_upgrade($op, $queue);
-}
-
-/**
- * Implements hook_civicrm_managed().
- *
- * Generate a list of entities to create/deactivate/delete when this module
- * is installed, disabled, uninstalled.
- */
-function fieldbasedacls_civicrm_managed(&$entities) {
-  return _fieldbasedacls_civix_civicrm_managed($entities);
 }
 
 /**
