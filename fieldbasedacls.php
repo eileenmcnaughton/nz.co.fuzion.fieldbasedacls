@@ -150,7 +150,7 @@ function fieldbasedacls_civicrm_aclWhereClause($type, &$tables, &$whereTables, &
 function fieldbasedacls_get_permissions_field($customgroup, $type) {
   // get CiviCRM Custom Data Groups
   $query = "SELECT id, label, column_name FROM civicrm_custom_field WHERE custom_group_id = '$customgroup' AND label LIKE '%$type%'";
-  $dao = CRM_Core_DAO::executeQuery($query, CRM_Core_DAO::$_nullArray);
+  $dao = CRM_Core_DAO::executeQuery($query);
   // do an or of all the where clauses u see
   $custom_fields = [];
   while ($dao->fetch()) {
